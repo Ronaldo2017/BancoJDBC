@@ -3,9 +3,9 @@ package pos_java_jdbc;
 import java.util.List;
 
 import org.junit.Test;
-
-import conexao.jdbc.SingleConnection;
 import dao.UserPosDao;
+import model.BeanUserFone;
+import model.Telefone;
 import model.Userposjava;
 
 public class TesteBancoJdbc {
@@ -72,5 +72,34 @@ public class TesteBancoJdbc {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Test
+	public void testInserTelefone() {
+		Telefone telefone = new Telefone();
+		telefone.setNumero("(45) 4549-5415");
+		telefone.setTipo("casa");
+		telefone.setUsuario(2L);
+
+		UserPosDao dao = new UserPosDao();
+		dao.salvarTelefone(telefone);
+	}
+
+	@Test
+	public void testeCarregaFonesUser() {
+		UserPosDao dao = new UserPosDao();
+
+		List<BeanUserFone> beanUserFones = dao.listaUserFone(1L);
+
+		for (BeanUserFone beanUserFone : beanUserFones) {
+			System.out.println(beanUserFone);
+			System.out.println("-------------------------------------------");
+		}
+	}
+
+	@Test
+	public void testeDeleteUserFone() {
+		UserPosDao dao = new UserPosDao();
+		dao.deleteFonePorUser(2L);
 	}
 }
